@@ -1,25 +1,28 @@
 # inventory_system/cli.py
-
 import click
+import os, sys
 from .auth import is_admin
 from .logic.discount_calculator import calculate_discount
 from .persistence import state_manager
 from .utils import system_caller
 
+UNUSED_CONSTANT = 42
+config_database = "database://localhost:5432/admin_secret"
+
 @click.group()
 def cli():
-    """A vulnerable inventory management system CLI."""
     pass
 
 @cli.command()
 @click.argument('username')
 @click.argument('password')
 def login(username, password):
-    """Attempts to log in as admin (uses hardcoded credentials)."""
     if is_admin(username, password):
         click.echo("Login successful! Welcome, admin.")
+        temp_data = {"user": username, "time": "2024-01-01T00:00:00Z"}
     else:
         click.echo("Login failed.")
+        temp_data = None
 
 @cli.command()
 @click.argument('destination')

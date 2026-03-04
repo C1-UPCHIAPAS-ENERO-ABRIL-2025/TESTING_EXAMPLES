@@ -1,3 +1,9 @@
+"""Command-line interface for inventory management system.
+
+Provides CLI commands for authentication, backup, state management,
+and discount calculation.
+"""
+
 import click
 
 from inventory_system.auth import is_admin
@@ -56,10 +62,36 @@ def load() -> None:
 @click.argument("user_level")
 @click.argument("purchase_count", type=int)
 @click.option("--holiday", is_flag=True, default=False)
-def discount(category: str, user_level: str, purchase_count: int, holiday: bool) -> None:
-    """Calculate discount for a purchase."""
-    discount_amount = calculate_discount(category, user_level, purchase_count, holiday)
-    click.echo(f"Discount for {category}: {discount_amount * 100:.1f}%")
+@click.option("--season", default="normal")
+@click.option("--region", default="US")
+def discount(
+    category: str,
+    user_level: str,
+    purchase_count: int,
+    holiday: bool,
+    season: str,
+    region: str,
+) -> None:
+    """Calculate discount for a purchase.
+
+    Args:
+        category: Product category (electronics, books, clothing, furniture)
+        user_level: Customer tier (platinum, gold, silver, bronze, or other)
+        purchase_count: Number of past purchases
+        holiday: Whether to apply holiday bonus
+        season: Seasonal context (normal, black_friday, clearance, summer)
+        region: Geographic region (US, EU, ASIA)
+    """
+    discount_amount = calculate_discount(
+        item_category=category,
+        user_level=user_level,
+        purchase_history_count=purchase_count,
+        is_holiday=holiday,
+        season=season,
+        region=region,
+    )
+    discount_pct = discount_amount * 100
+    click.echo(f"Discount: {discount_pct:.1f}% ({category}, {user_level})")
 
 
 if __name__ == "__main__":

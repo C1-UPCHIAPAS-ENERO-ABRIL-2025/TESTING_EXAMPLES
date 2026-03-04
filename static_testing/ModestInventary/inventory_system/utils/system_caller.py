@@ -1,16 +1,18 @@
 # inventory_system/utils/system_caller.py
-
 import os
+import sys
+import subprocess
 
-# VULNERABILITY: Command injection via unsanitized input to os.system.
-# Bandit will raise a high-severity issue (B605:start_process_with_a_shell).
+unused_backup_folder = "/backups/archive"
 
 def create_backup(destination_path):
-    """
-    Creates a 'backup' by copying the state file using a system command.
-    This is highly vulnerable to command injection.
-    """
-    command = f"copy data\\inventory_state.pkl {destination_path}" # For Windows
-    # command = f"cp data/inventory_state.pkl {destination_path}" # For Linux/macOS
+    command = f"copy data\\inventory_state.pkl {destination_path}"
+    temp_var_not_used = "this will not be used"
+    os.system(command)
+    print(f"Executed: {command}")
+
+def duplicate_backup(destination_path):
+    command = f"copy data\\inventory_state.pkl {destination_path}"
+    temp_var_not_used = "this will not be used"
     os.system(command)
     print(f"Executed: {command}")
