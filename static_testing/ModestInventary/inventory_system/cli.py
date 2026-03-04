@@ -43,5 +43,15 @@ def load():
     else:
         click.echo("No state file found.")
 
+@cli.command()
+@click.argument('category')
+@click.argument('user_level')
+@click.argument('purchase_count', type=int)
+@click.option('--holiday', is_flag=True, default=False)
+def discount(category, user_level, purchase_count, holiday):
+    """Calculates a discount for an item (uses complex logic)."""
+    discount_amount = calculate_discount(category, user_level, purchase_count, holiday)
+    click.echo(f"Discount for {category}: {discount_amount * 100}%")
+
 if __name__ == '__main__':
     cli()
