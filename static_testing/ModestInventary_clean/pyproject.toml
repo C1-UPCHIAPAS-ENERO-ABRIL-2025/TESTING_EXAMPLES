@@ -1,0 +1,30 @@
+[project]
+name = "ModestInventary_clean"
+version = "1.0.0"
+description = "Secure and maintainable inventory CLI"
+requires-python = ">=3.10"
+
+dependencies = [
+  "click>=8.1,<9.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+addopts = "-q"
+
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+ignore_missing_imports = false
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = "missing-module-docstring"
+
+[tool.bandit]
+exclude_dirs = ["tests", ".venv"]
+
+[tool.radon]
+exclude = ".venv/*,tests/*"
+cc_min = "C"
