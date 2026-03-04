@@ -1,0 +1,20 @@
+[project]
+name = "ModestInventary"
+version = "0.1.0"
+description = "A deliberately vulnerable inventory system for static analysis tool demonstration."
+
+[tool.bandit]
+exclude_dirs = ["tests", ".venv"]
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = "missing-module-docstring,missing-class-docstring,missing-function-docstring"
+
+[tool.radon]
+exclude = ".venv/*,tests/*"
+cc_min = 'C' # Report functions with complexity 'C' or higher
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
